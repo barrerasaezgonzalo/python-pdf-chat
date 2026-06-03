@@ -1,25 +1,28 @@
 from pathlib import Path
+from services.upload_status import  get_status
 from fastapi import APIRouter, HTTPException
 
 from services.supabase_service import (
     eliminar_documento
 )
-
 router = APIRouter()
 
 DOCUMENTS_DIR = Path(
     "storage"
 )
+STATUS_DIR = Path(
+    "storage/status"
+)
 
 @router.get("/documents")
 async def get_documents():
-    files = DOCUMENTS_DIR.glob(
-        "*.pdf"
-    )
+    files = DOCUMENTS_DIR.glob("*.pdf")
 
     return [
         {
-            "name": file.name
+            "id": file.name,
+            "name": file.name,
+            "status": get_status(file.name)
         }
         for file in files
     ]

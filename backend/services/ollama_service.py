@@ -1,6 +1,12 @@
+import os
 import requests
-from config import OLLAMA_URL, EMBED_MODEL, CHAT_MODEL
+from config import OLLAMA_URL, EMBED_MODEL, CHAT_MODEL, GROK_URL
+from openai import OpenAI
 
+client = OpenAI(
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url=GROK_URL
+)
 
 def obtener_vector(texto):
     response = requests.post(
@@ -15,26 +21,23 @@ def obtener_vector(texto):
 
 
 def generar_respuesta(pregunta, contexto):
-    prompt = f"""
-Contexto:
-{contexto}
+    prompt_completo = f"""
+    Contexto:
+    {contexto}
 
-Pregunta:
-{pregunta}
+    Pregunta:
+    {pregunta}
 
-Responde solo usando el contexto.
-"""
+    Responde solo usando el contexto.
+    """
 
-    response = requests.post(
-        f"{OLLAMA_URL}/api/generate",
-        json={
-            "model": CHAT_MODEL,
-            "prompt": prompt,
-            "stream": False,
-            "options": {
-                "temperature": 0.2
-            }
-        }
+    response = client.chat.completions.create(
+        model=CHAT_MODEL,
+        messages=[
+            {"role": "system", "content": "Eres un asistente útil que responde basado en el contexto proporcionado."},
+            {"role": "user", "content": prompt_completo}
+        ],
+        temperature=0.2
     )
 
-    return response.json()["response"]
+    return response.choices[0].message.content

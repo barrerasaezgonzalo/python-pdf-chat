@@ -1,4 +1,4 @@
-from backend.services.upload_status import set_deleted
+from services.upload_status import set_deleted
 from supabase import create_client
 from config import SUPABASE_URL, SUPABASE_KEY
 

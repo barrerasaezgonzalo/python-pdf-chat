@@ -1,11 +1,26 @@
-# Python
+# --- Python (Backend) ---
 backend/venv/
 backend/__pycache__/
+backend/*.pyc
 backend/.env
 
-# Node
+# --- Node (Frontend) ---
 frontend/node_modules/
 frontend/dist/
+frontend/.next/
+frontend/out/
+frontend/.env
 
-# Otros
+# --- IDEs / Config ---
+.vscode/
+.idea/
 .DS_Store
+
+# --- Variables de Entorno (ignorar archivos reales) ---
+.env*
+!.env.example
+
+# --- Logs y Bases de datos ---
+*.log
+*.sqlite
+*.sqlite3
