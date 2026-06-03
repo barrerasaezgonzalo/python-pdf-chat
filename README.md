@@ -85,3 +85,5 @@ npm run dev
 ## 📝 Contribuciones
 
 ¡Cualquier sugerencia o mejora es bienvenida!
+
+<img width="1901" height="805" alt="Contexta" src="https://github.com/user-attachments/assets/92d613fd-063a-4edd-b5c2-4aee18f78fe9" />
